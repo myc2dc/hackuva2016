@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<HTML>
+<head>
+	<h4 align = "center" id="titleName"> Streamlined </h4>
+	<title> Hack UVA </title>
+
+	<div id="navbar">
+	<nav>
+  	  <ul>
+	    <li>
+	      <a href="index.html">Home</a>
+	    </li>
+	    <li>
+	      <a href="indexDem.html">Democratic</a>
+	    </li>
+	    <li>
+	      <a href="indexRep.html">Republican</a>
+	    </li>
+	  </ul>
+	</nav>
+	</div>
+
+	<div id="keyDiv">
+		<div id="keyContent">
+			<div class='squareT'></div>
+			<div id="trumpDiv"> 
+			</div>
+			<br/>
+			<div class='squareC'></div>
+			<div id="cruzDiv"> 
+			</div>
+			<br/>
+			<div class='squareK'></div>
+			<div id="kasichDiv"> 
+			</div>
+			<br/>
+			<div id="4Div"> 
+			</div>
+		</div>
+	</div>
+
+	<body>
+    <div id="canvasContainer"></div>
+	</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script type="text/javascript" src="results.json"></script>
+<script type="text/javascript" src="pie.js"></script>
+<link rel = "stylesheet" type = "text/css" href = "pie.css"/>
+<script type = "text/javascript">
+	//var mydata = JSON.parse(arraytext);
+	//document.getElementById("myDiv").innerHTML = mydata[0];
+	//gets count for each candidate
+	var countBernie = 0;
+	var percentBernie = 0;
+	var countHillary = 0;
+	var percentHillary = 0;
+	var countTrump = 0;
+	var percentTrump = 0;
+	var countCruz = 0;
+	var percentCruz = 0;
+	var countKasich = 0;
+	var percentKasich = 0;
+	var countTotal = 0;
+	var countTotalDem = 0;
+	var countTotalRepub = 0;
+
+	$.getJSON("results.json", function(json) {
+		console.log(json);
+		//document.getElementById("myDiv").innerHTML = json.arraytext;
+
+		for(i = 0; i < json.arraytext.length; i++) {
+
+			var strJson = json.arraytext[i].toLowerCase();
+
+			if(strJson.indexOf("sanders") != -1 || strJson.indexOf("berniesanders") != -1 || strJson.indexOf("feelthebern") != -1 || strJson.indexOf("birdiesanders") != -1 || strJson.indexOf("bernie2016") != -1) {
+				countBernie++;
+			} if(strJson.indexOf("clinton") != -1 || strJson.indexOf("hillaryclinton") != -1 || strJson.indexOf("hillaryforamerica") != -1 || strJson.indexOf("imwithher") != -1 || strJson.indexOf("hillary2016") != -1) {
+				countHillary++;
+			} if (strJson.indexOf("trump") != -1 || strJson.indexOf("donaldtrump") != -1 || strJson.indexOf("makeamericagreatagain") != -1 || strJson.indexOf("trump2016") != -1 || strJson.indexOf("trumptrain") != -1) {
+				countTrump++;
+			} if(strJson.indexOf("cruz") != -1 || strJson.indexOf("tedcruz") != -1 || strJson.indexOf("cruzsexscandal") != -1 || strJson.indexOf("cruzcrew") != -1 || strJson.indexOf("lyingted") != -1 || strJson.indexOf("cruz2016") != -1) {
+				countCruz++;
+			} if(strJson.indexOf("kasich") != -1 || strJson.indexOf("johnkasich") != -1 || strJson.indexOf("kasich2016") != -1) {
+				countKasich++;
+			}
+		}
+
+		countTotal = countBernie + countHillary + countTrump + countCruz + countKasich;
+		/*percentBernie = (countBernie / countTotal) *100;
+		percentHillary = (countHillary / countTotal) *100;*/
+		countTotalDem = countBernie + countHillary;
+		countTotalRepub = countTrump + countCruz + countKasich;
+
+		percentTrump = parseInt((countTrump / countTotalRepub) *100);
+		percentCruz = parseInt((countCruz / countTotalRepub) *100);
+		percentKasich = parseInt((countKasich / countTotalRepub) *100);
+
+		/* document.getElementById("bernieDiv").innerHTML = "Bernie Sanders " + percentBernie + "%";
+		document.getElementById("clintonDiv").innerHTML = "Hillary Clinton " + percentHillary + "%"; */
+		document.getElementById("trumpDiv").innerHTML = "Donald Trump " + percentTrump + "%";
+		document.getElementById("cruzDiv").innerHTML = "Ted Cruz " + percentCruz + "%";
+		document.getElementById("kasichDiv").innerHTML = "John Kasich " + percentKasich + "%"; 
+
+		document.getElementById("4Div").innerHTML = "Total # of Tweets: " + countTotalRepub;
+
+
+
+	});
+</script>
+</head>
+</body>
+</HTML> 

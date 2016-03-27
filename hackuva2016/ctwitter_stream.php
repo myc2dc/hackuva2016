@@ -6,20 +6,19 @@
 //	Mike (mike@mikepultz.com)
 //
 // Simple Example:
-//
 //	require 'ctwitter_stream.php';
-//
 //	$t = new ctwitter_stream();
-//
 //	$t->login('consumer_key', 'consumer secret', 'access token', 'access secret');
-//
 //	$t->start(array('facebook', 'fbook', 'fb'))
-//
+//session_start();
 
-$count = 0;
-
+//$count2 = 0;
+$temp = 0;
 class ctwitter_stream
 {
+    public $count = 0;
+    //public $count2 = 0;
+    public $name = "";
     private $m_oauth_consumer_key;
     private $m_oauth_consumer_secret;
     private $m_oauth_token;
@@ -30,7 +29,6 @@ class ctwitter_stream
     private $m_oauth_signature_method = 'HMAC-SHA1';
     private $m_oauth_timestamp;
     private $m_oauth_version = '1.0';
-
 
     public function __construct()
     {
@@ -63,12 +61,11 @@ class ctwitter_stream
     //
     private function process_tweet(array $_data)
     {
-        global $count;
+        global $count; // need the global otherwise it will think its undefined
         print_r($_data);
-        //echo $_data;
         $count++;
-        //echo "count: " . $count;
-
+        echo "count: " . $count;
+        //print_r($_keywords);
         return true;
     }
 
@@ -156,7 +153,8 @@ class ctwitter_stream
                 // set it to non-blocking
                 //
                 stream_set_blocking($fp, 0);
-
+                //!feof($fp))
+                //global $count2;
                 while(!feof($fp))
                 {
                     $read   = array($fp);
@@ -167,7 +165,7 @@ class ctwitter_stream
                     // select, waiting up to 10 minutes for a tweet; if we don't get one, then
                     // then reconnect, because it's possible something went wrong.
                     //
-                    $res = stream_select($read, $write, $except, 600, 0);
+                    $res = stream_select($read, $write, $except, 0, 0);
                     if ( ($res == false) || ($res == 0) )
                     {
                         break;
@@ -205,7 +203,13 @@ class ctwitter_stream
                             //
                             // process it
                             //
-                            $this->process_tweet($data);
+                            if (is_array($data)) { 
+                                //global $count2;
+                                //$count2++;
+                                $this->process_tweet($data);
+                                
+                            }
+                            
                         }
                     }
                 }
@@ -217,6 +221,7 @@ class ctwitter_stream
 
         return;
     }
+
 };
 
 ?>

@@ -1,6 +1,5 @@
 <?php
 
-$countHillary = 0;
 $arrayText = array();
 class ctwitter_stream
 {
@@ -21,7 +20,7 @@ class ctwitter_stream
         //
         // set a time limit to unlimited
         //
-        set_time_limit(60);
+        set_time_limit(120);
     }
 
     //
@@ -97,6 +96,7 @@ class ctwitter_stream
                 //
                 // build the data and store it so we can get a length
                 //
+                //$data = 'follow=759251&';
                 $data = 'track=' . rawurlencode(implode($_keywords, ','));
 
                 //
@@ -167,7 +167,7 @@ class ctwitter_stream
                 stream_set_blocking($fp, 0);
                 //!feof($fp)
                 global $count;
-                while($count < 5)
+                while($count < 500)
                 {
                     $read   = array($fp);
                     $write  = null;

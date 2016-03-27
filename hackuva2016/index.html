@@ -1,16 +1,225 @@
 <!DOCTYPE HTML>
 <HTML>
 <head>
-	<h4 align = "center"> Hack UVA </h4>
+	<h4 align = "center" id="titleName"> Streamlined </h4>
 	<title> Hack UVA </title>
-	<div id="myDiv"> 
+
+	<div id="navbar">
+	<nav>
+  	  <ul>
+	    <li>
+	      <a href="index.html">Home</a>
+	    </li>
+	    <li>
+	      <a href="indexDem.html">Democratic</a>
+	    </li>
+	    <li>
+	      <a href="indexRep.html">Republican</a>
+	    </li>
+	  </ul>
+	</nav>
+	</div>
+
+	<div id="keyDiv">
+		<div id="keyContent">
+			<div class='squareB'> 
+			</div>
+			<div id="bernieDiv"> 
+			</div>
+			<br/>
+			<div class='squareH'> 
+			</div>
+			<div id="clintonDiv"> 
+			</div>
+			<br/>
+			<div class='squareT'> 
+			</div>
+			<div id="trumpDiv"> 
+			</div>
+			<br/>
+			<div class='squareC'> 
+			</div>
+			<div id="cruzDiv"> 
+			</div>
+			<br/>
+			<div class='squareK'> 
+			</div>
+			<div id="kasichDiv"> 
+			</div>
+			<br/>
+			<div id="4Div"> 
+			</div>
+		</div>
+	</div>
+
+	<body>
+    <div id="canvasContainer"></div>
+	</body>
+
+	<div id="ratings"> 
+		<div class="container" style="display:table-row"> 
+			<div class="up fontawesome-thumbs-up"></div>
+			<div class="down fontawesome-thumbs-down"></div> 
+			
+		</div>
+		<div id="bernieDiv2"> 
+			</div>
+		<div id="hillaryDiv2"> 
+			</div>
+		<div id="trumpDiv2"> 
+			</div>
+		<div id="cruzDiv2"> 
+			</div>
+		<div id="kasichDiv2"> 
+			</div>
 	</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script type="text/javascript" src="results.json"></script>
+<script type="text/javascript" src="pie.js"></script>
+<link rel = "stylesheet" type = "text/css" href = "pie.css"/>
 <script type = "text/javascript">
-	var mydata = JSON.parse(arraytext);
-	document.getElementById("myDiv").innerHTML = mydata[0];
+	//var mydata = JSON.parse(arraytext);
+	//document.getElementById("myDiv").innerHTML = mydata[0];
+	//gets count for each candidate
+	var countBernie = 0;
+	var percentBernie = 0;
+	var posBernie = 0;
+	var negBernie = 0;
+	var totalBernie = 0;
+	var bernieApproval = 0;
+
+	var countHillary = 0;
+	var percentHillary = 0;
+	var posHillary = 0;
+	var negHillary = 0;
+	var totalHillary = 0;
+	var hillaryApproval = 0;
+
+	var countTrump = 0;
+	var percentTrump = 0;
+	var posTrump = 0;
+	var negTrump = 0;
+	var totalTrump = 0;
+	var trumpApproval = 0;
+
+	var countCruz = 0;
+	var percentCruz = 0;
+	var posCruz = 0;
+	var negCruz = 0;
+	var totalCruz = 0;
+	var cruzApproval = 0;
+
+	var countKasich = 0;
+	var percentKasich = 0;
+	var posKasich = 0;
+	var negKasich = 0;
+	var totalKasich = 0;
+	var kasichApproval = 0; 
+
+	var countTotal = 0;
+	var countTotalDem = 0;
+	var countTotalRepub = 0;
+
+	$.getJSON("results.json", function(json) {
+		console.log(json);
+		//document.getElementById("myDiv").innerHTML = json.arraytext;
+
+		for(i = 0; i < json.arraytext.length; i++) {
+
+			var strJson = json.arraytext[i].toLowerCase();
+
+			if(strJson.indexOf("sanders") != -1 || strJson.indexOf("berniesanders") != -1 || strJson.indexOf("feelthebern") != -1 || strJson.indexOf("birdiesanders") != -1 || strJson.indexOf("bernie2016") != -1) {
+				countBernie++;
+				if(strJson.indexOf("feelthebern") != -1 || strJson.indexOf("birdiesanders") != -1) {
+					posBernie++;
+				} else if(strJson.indexOf("socialist") != -1 || strJson.indexOf("berniesucks") != -1 || strJson.indexOf("communist") != -1 || strJson.indexOf("delusion") != -1 || strJson.indexOf("unrealistic") != -1) {
+					negBernie++;
+				}
+			} if(strJson.indexOf("clinton") != -1 || strJson.indexOf("hillaryclinton") != -1 || strJson.indexOf("hillaryforamerica") != -1 || strJson.indexOf("imwithher") != -1 || strJson.indexOf("hillary2016") != -1) {
+				countHillary++;
+					if(strJson.indexOf("imwithher") != -1 || strJson.indexOf("hillaryforamerica") != -1) {
+						posHillary++;
+					}
+				else if(strJson.indexOf("emailscandal") != -1 || strJson.indexOf("jail") != -1 || strJson.indexOf("hypocrite") != -1 || strJson.indexOf("hypocritical") != -1) {
+					negHillary++;
+				}
+			} if (strJson.indexOf("trump") != -1 || strJson.indexOf("donaldtrump") != -1 || strJson.indexOf("makeamericagreatagain") != -1 || strJson.indexOf("trump2016") != -1 || strJson.indexOf("trumptrain") != -1) {
+				countTrump++;
+				if(strJson.indexOf("trumptrain") != -1 || strJson.indexOf("makeamericagreatagain") != -1) {
+					posTrump++;
+				} else if (strJson.indexOf("drumpf") != -1 || strJson.indexOf("dangerous") != -1 || strJson.indexOf("racist") != -1 || strJson.indexOf("violence") != -1) {
+					negTrump++;
+				}
+			} if(strJson.indexOf("cruz") != -1 || strJson.indexOf("tedcruz") != -1 || strJson.indexOf("cruzsexscandal") != -1 || strJson.indexOf("cruzcrew") != -1 || strJson.indexOf("lyingted") != -1 || strJson.indexOf("cruz2016") != -1) {
+				countCruz++;
+				if(strJson.indexOf("cruzcrew") != -1 || strJson.indexOf("trustted") != -1) {
+					posCruz++
+				} else if(strJson.indexOf("affair") != -1 || strJson.indexOf("cruzsexscandal") != -1 || strJson.indexOf("lyingted") != -1) {
+					negCruz++;
+				}
+			} if(strJson.indexOf("kasich") != -1 || strJson.indexOf("johnkasich") != -1 || strJson.indexOf("kasich2016") != -1) {
+				countKasich++;
+				if(strJson.indexOf("united") != -1) {
+					posKasich++;
+				} else if (strJson.indexOf("waronwomen") != -1 || strJson.indexOf("extremist") != -1) {
+					negKasich++;
+				}
+			}
+		}
+
+		countTotal = countBernie + countHillary + countTrump + countCruz + countKasich;
+		percentBernie = parseInt((countBernie / countTotal) *100);
+		percentHillary = parseInt((countHillary / countTotal) *100);
+		percentTrump = parseInt((countTrump / countTotal) *100);
+		percentCruz = parseInt((countCruz / countTotal) *100);
+		percentKasich = parseInt((countKasich / countTotal) *100);
+
+		bernieApproval = parseInt((posBernie / (posBernie + negBernie))*100);
+		hillaryApproval = parseInt((posHillary / (posHillary + negHillary))*100);
+		trumpApproval = parseInt((posTrump / (posTrump + negTrump))*100);
+		cruzApproval = parseInt((posCruz / (posCruz + negCruz))*100);
+		kasichApproval = parseInt((posKasich / (posKasich + negKasich))*100);
+
+		if(isNaN(bernieApproval)) {
+			bernieApproval = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Not enough data";
+		} else { 
+			bernieApproval = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + bernieApproval + "%" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + (100-bernieApproval) + "%";
+		} if(isNaN(hillaryApproval)) {
+			hillaryApproval = "Not enough data";
+		} else {
+			hillaryApproval = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + hillaryApproval + "%" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + (100-hillaryApproval) + "%";
+		} if(isNaN(trumpApproval)) {
+			trumpApproval = "Not enough data";
+		} else {
+			trumpApproval = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + trumpApproval + "%" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + (100-trumpApproval) + "%";
+		} if(isNaN(cruzApproval)) {
+			cruzApproval = "Not enough data";
+		} else {
+			cruzApproval = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + cruzApproval + "%" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + (100-cruzApproval) + "%";
+		} if(isNaN(kasichApproval)) {
+			kasichApproval = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Not enough data";
+		} else {
+			kasichApproval = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + kasichApproval + "%" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + (100-kasichApproval) + "%";
+		}
+
+		countTotalDem = countBernie + countHillary;
+		countTotalRepub = countTrump + countCruz + countKasich;
+
+		document.getElementById("bernieDiv").innerHTML = "Bernie Sanders " + percentBernie + "%";
+		document.getElementById("clintonDiv").innerHTML = "Hillary Clinton " + percentHillary + "%";
+		document.getElementById("trumpDiv").innerHTML = "Donald Trump " + percentTrump + "%";
+		document.getElementById("cruzDiv").innerHTML = "Ted Cruz " + percentCruz + "%";
+		document.getElementById("kasichDiv").innerHTML = "John Kasich " + percentKasich + "%";
+		document.getElementById("4Div").innerHTML = "Total # of Tweets: " + countTotal;
+
+		document.getElementById("bernieDiv2").innerHTML = "Bernie Sanders " + bernieApproval;
+		document.getElementById("hillaryDiv2").innerHTML = "Hillary Clinton " + hillaryApproval;
+		document.getElementById("trumpDiv2").innerHTML = "Donald Trump " + trumpApproval;
+		document.getElementById("cruzDiv2").innerHTML = "Ted Cruz " + cruzApproval;
+		document.getElementById("kasichDiv2").innerHTML = "John Kasich " + kasichApproval;
+		document.getElementById("kasichDiv2").innerHTML = "John Kasich " + kasichApproval;
+	});
 </script>
 </head>
 </body>
